@@ -12,7 +12,8 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.10.17"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

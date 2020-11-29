@@ -1,9 +1,11 @@
 import { Router } from 'express';
 
-import UserController from './app/controllers/UserController';
+import SquareController from './app/controllers/SquareController';
+
+import ValidateSchemaMiddleware from './app/middlewares/validateRouteSchema';
 
 const routes = new Router();
 
-routes.post('/user', UserController.store);
+routes.post('/territories', ValidateSchemaMiddleware, SquareController.store);
 
 export default routes;

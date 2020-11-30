@@ -1,3 +1,5 @@
 import app from './app';
 
-app.listen(process.env.PORT, () => console.log('Running 🚀️'));
+const { PORT, IP } = process.env;
+
+app.listen(PORT, IP, () => console.log('Running 🚀️'));

@@ -1,9 +1,26 @@
-const getArea = (start, end) => (start.x - end.x) * (start.y - end.y);
+const getPosition = (start, end) => {
+  const locationX = (start.x - end.x);
+  const locationY = (start.y - end.y);
+  const area = locationX * locationY;
 
-const validateArea = (squares, area) => {
-  const sameArea = squares.find(square => square.area === area);
+  return {
+    area,
+    location: {
+      x: Math.abs(locationX),
+      y: Math.abs(locationY),
+    }
+  }
+};
 
-  if (sameArea) {
+const findLocation = (locationX, locationY, squares) => squares.find(square => {
+  return locationX <= square.location.x && locationY <= square.location.y
+});
+
+const validateLocation = (squares, location) => {
+  const { x: locationX, y: locationY } = location;
+  const intoLocation = findLocation(locationX, locationY, squares);
+
+  if (intoLocation) {
     throw {
       statusCode: 401,
       message: 'this new territory overlays another territory',
@@ -25,7 +42,8 @@ const formatedDataSquare = (square, painted_squares) => {
 }
 
 export {
-  getArea,
-  validateArea,
+  getPosition,
+  validateLocation,
   formatedDataSquare,
+  findLocation,
 }

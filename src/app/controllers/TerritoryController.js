@@ -1,26 +1,31 @@
 import Square from '../models/Square';
-import { getArea, validateArea, formatedDataSquare } from '../utils/useCase/square';
+import { getPosition, validateLocation, formatedDataSquare } from '../utils/useCase/square';
 
-class SquareController {
+class TerritoryController {
   async store(req, res) {
     try {
 
       const { name, start, end } = req.body;
+      let idFiltered = [];
 
-      const area = getArea(start, end);
+      const { area, location } = getPosition(start, end);
 
       const foundSquares = await Square.find();
-      validateArea(foundSquares, area);
 
-      const idFiltered = foundSquares.map(square => square.id);
+      if (foundSquares.length !== 0) {
+        validateLocation(foundSquares, location);
+        idFiltered = foundSquares.map(square => square.id);
+      }
 
       const square = await Square.create({
-        id: (Math.max(...idFiltered) + 1),
+        id: foundSquares.length !== 0 ?
+          (Math.max(...idFiltered) + 1) : 1,
         name,
         start,
         end,
         area,
         painted_area: 0,
+        location,
       });
 
       await square.save();
@@ -111,4 +116,4 @@ class SquareController {
   }
 }
 
-export default new SquareController();
+export default new TerritoryController();

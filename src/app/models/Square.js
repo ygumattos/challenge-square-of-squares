@@ -16,6 +16,10 @@ const SquareSchema = new mongoose.Schema({
     type: Object,
     required: true,
   },
+  location: {
+    type: Object,
+    required: true,
+  },
   area: {
     type: Number,
     required: true,

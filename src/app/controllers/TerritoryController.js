@@ -1,6 +1,8 @@
 import Territory from '../models/Territory';
 import { getPosition, validateLocation, formatedDataTerritory } from '../utils/useCase/territory';
 
+import Error from '../common/errors/globalError';
+
 class TerritoryController {
   async store(req, res) {
     try {
@@ -35,12 +37,8 @@ class TerritoryController {
         .status(201)
         .json({ data: formatedTerritory, error: false });
     } catch (err) {
-      if (err.statusCode) {
-        return res
-          .status(err.statusCode)
-          .json({ message: err.message, error: true });
-      }
-      return res.status(500).json({ err, error: true })
+      const { statusCode, message, error } = Error(err);
+      return res.status(statusCode).json({ message, error })
     }
 
   }
@@ -57,12 +55,8 @@ class TerritoryController {
 
       return res.json(data);
     } catch (err) {
-      if (err.statusCode) {
-        return res
-          .status(err.statusCode)
-          .json({ message: err.message, error: true });
-      }
-      return res.status(500).json({ err, error: true })
+      const { statusCode, message, error } = Error(err);
+      return res.status(statusCode).json({ message, error })
     }
   }
 
@@ -84,12 +78,8 @@ class TerritoryController {
       return res.json({ data: formatedTerritory, error: false });
 
     } catch (err) {
-      if (err.statusCode) {
-        return res
-          .status(err.statusCode)
-          .json({ message: err.message, error: true });
-      }
-      return res.status(500).json({ message: err.message, error: true })
+      const { statusCode, message, error } = Error(err);
+      return res.status(statusCode).json({ message, error })
     }
   }
 
@@ -106,12 +96,8 @@ class TerritoryController {
 
       return res.json({ error: false })
     } catch (err) {
-      if (err.statusCode) {
-        return res
-          .status(err.statusCode)
-          .json({ message: err.message, error: true });
-      }
-      return res.status(500).json({ err, error: true })
+      const { statusCode, message, error } = Error(err);
+      return res.status(statusCode).json({ message, error })
     }
   }
 }

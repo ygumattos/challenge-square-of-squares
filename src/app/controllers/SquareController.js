@@ -1,6 +1,8 @@
 import Territory from '../models/Territory';
 import { findLocation } from '../utils/useCase/territory';
 
+import Error from '../common/errors/globalError';
+
 class SquareController {
   async index(req, res) {
     try {
@@ -26,12 +28,8 @@ class SquareController {
         .status(201)
         .json({ data: { x, y, painted: !!foundSquare }, error: false });
     } catch (err) {
-      if (err.statusCode) {
-        return res
-          .status(err.statusCode)
-          .json({ message: err.message, error: true });
-      }
-      return res.status(500).json({ err, error: true })
+      const { statusCode, message, error } = Error(err);
+      return res.status(statusCode).json({ message, error })
     }
 
   }
@@ -62,7 +60,7 @@ class SquareController {
           .json({ message: 'this square already painted', error: true });
       }
 
-      const updated = await Square.updateOne({
+      const updated = await Territory.updateOne({
         id: FoundTerritoryByLocation.id,
       }, {
         painted_squares: [
@@ -71,19 +69,13 @@ class SquareController {
         ]
       })
 
-      console.log(updated);
-
       return res
         .status(201)
         .json({ data: { x, y, painted: true }, error: false });
 
     } catch (err) {
-      if (err.statusCode) {
-        return res
-          .status(err.statusCode)
-          .json({ message: err.message, error: true });
-      }
-      return res.status(500).json({ err, error: true })
+      const { statusCode, message, error } = Error(err);
+      return res.status(statusCode).json({ message, error })
     }
   }
 }

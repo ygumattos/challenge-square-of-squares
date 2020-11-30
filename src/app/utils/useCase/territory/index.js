@@ -37,7 +37,7 @@ const formatedDataTerritory = (territory, withpainted) => {
     area: territory.area,
     painted_area: territory.painted_area,
   }
-  if (withpainted === 'true') data.painted_squares = square.painted_squares
+  if (withpainted === 'true') data.painted_squares = territory.painted_squares
   return data;
 }
 

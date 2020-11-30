@@ -9,5 +9,6 @@ const routes = new Router();
 routes.post('/territories', ValidateSchemaMiddleware, SquareController.store);
 routes.get('/territories', SquareController.show);
 routes.delete('/territories/:id', SquareController.delete);
+routes.get('/territories/:id', SquareController.index);
 
 export default routes;

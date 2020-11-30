@@ -64,6 +64,19 @@ class SquareController {
 
   async index(req, res) {
     try {
+      const { id } = req.params;
+
+      const foundSquare = await Square.findOne({ id });
+
+      if (!foundSquare || foundSquare === null) {
+        return res
+          .status(404)
+          .json({ message: 'this territory was not found', error: true });
+      }
+
+      const formatedSquare = formatedDataSquare(foundSquare);
+
+      return res.json({ data: formatedSquare, error: false });
 
     } catch (err) {
       if (err.statusCode) {
@@ -79,6 +92,12 @@ class SquareController {
     try {
       const { id } = req.params;
       const deletedSquare = await Square.findOneAndDelete({ id });
+
+      if (!deletedSquare || deletedSquare === null) {
+        return res
+          .status(404)
+          .json({ message: 'this territory was not found', error: true });
+      }
 
       return res.json({ error: false })
     } catch (err) {

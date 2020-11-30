@@ -24,7 +24,7 @@
 
 - [x] 1.0: Docker, for real
 - [x] 2.0: Lets secure it a bit
-- [] 3.0 Update: Load balance that server sir!
+- [ ] 3.0 Update: Load balance that server sir!
 
 ## How to use
 

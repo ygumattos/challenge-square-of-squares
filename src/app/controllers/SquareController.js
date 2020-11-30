@@ -1,12 +1,12 @@
-import Square from '../models/Square';
-import { findLocation } from '../utils/useCase/square';
+import Territory from '../models/Territory';
+import { findLocation } from '../utils/useCase/territory';
 
 class SquareController {
   async index(req, res) {
     try {
       const { x, y } = req.params;
 
-      const territoryFound = await Square.find();
+      const territoryFound = await Territory.find();
       const FoundTerritoryByLocation = findLocation({
         locationX: x,
         locationY: y,
@@ -40,7 +40,7 @@ class SquareController {
     try {
       const { x, y } = req.params;
 
-      const territoryFound = await Square.find();
+      const territoryFound = await Territory.find();
       const FoundTerritoryByLocation = findLocation({
         locationX: x,
         locationY: y,

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const SquareSchema = new mongoose.Schema({
+const TerritorySchema = new mongoose.Schema({
   id: {
     type: Number,
   },
@@ -33,4 +33,4 @@ const SquareSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.model('Square', SquareSchema);
+export default mongoose.model('Territory', TerritorySchema);

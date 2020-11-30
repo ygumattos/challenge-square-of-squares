@@ -28,14 +28,14 @@ const validateLocation = (squares, location) => {
   }
 }
 
-const formatedDataSquare = (square, withpainted) => {
+const formatedDataTerritory = (territory, withpainted) => {
   const data = {
-    id: square.id,
-    name: square.name,
-    start: square.start,
-    end: square.end,
-    area: square.area,
-    painted_area: square.painted_area,
+    id: territory.id,
+    name: territory.name,
+    start: territory.start,
+    end: territory.end,
+    area: territory.area,
+    painted_area: territory.painted_area,
   }
   if (withpainted === 'true') data.painted_squares = square.painted_squares
   return data;
@@ -44,6 +44,6 @@ const formatedDataSquare = (square, withpainted) => {
 export {
   getPosition,
   validateLocation,
-  formatedDataSquare,
+  formatedDataTerritory,
   findLocation,
 }

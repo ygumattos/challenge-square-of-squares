@@ -1,24 +1,23 @@
-import Square from '../models/Square';
-import { getPosition, validateLocation, formatedDataSquare } from '../utils/useCase/square';
+import Territory from '../models/Territory';
+import { getPosition, validateLocation, formatedDataTerritory } from '../utils/useCase/territory';
 
 class TerritoryController {
   async store(req, res) {
     try {
-
       const { name, start, end } = req.body;
       let idFiltered = [];
 
       const { area, location } = getPosition(start, end);
 
-      const foundSquares = await Square.find();
+      const foundTerritories = await Territory.find();
 
-      if (foundSquares.length !== 0) {
-        validateLocation(foundSquares, location);
-        idFiltered = foundSquares.map(square => square.id);
+      if (foundTerritories.length !== 0) {
+        validateLocation(foundTerritories, location);
+        idFiltered = foundTerritories.map(territory => territory.id);
       }
 
-      const square = await Square.create({
-        id: foundSquares.length !== 0 ?
+      const territory = await Territory.create({
+        id: foundTerritories.length !== 0 ?
           (Math.max(...idFiltered) + 1) : 1,
         name,
         start,
@@ -28,13 +27,13 @@ class TerritoryController {
         location,
       });
 
-      await square.save();
+      await territory.save();
 
-      const formatedSquare = formatedDataSquare(square);
+      const formatedTerritory = formatedDataTerritory(territory);
 
       return res
         .status(201)
-        .json({ data: formatedSquare, error: false });
+        .json({ data: formatedTerritory, error: false });
     } catch (err) {
       if (err.statusCode) {
         return res
@@ -48,12 +47,12 @@ class TerritoryController {
 
   async show(req, res) {
     try {
-      const foundSquares = await Square.find();
+      const foundTerritories = await Territory.find();
 
-      const formatedSquares = foundSquares.map(square => formatedDataSquare(square));
+      const formatedTerritories = foundTerritories.map(territory => formatedDataTerritory(territory));
       const data = {
-        count: foundSquares.length,
-        ...formatedSquares
+        count: foundTerritories.length,
+        ...formatedTerritories
       }
 
       return res.json(data);
@@ -72,17 +71,17 @@ class TerritoryController {
       const { id } = req.params;
       const { withpainted } = req.query;
 
-      const foundSquare = await Square.findOne({ id });
+      const foundTerritory = await Territory.findOne({ id });
 
-      if (!foundSquare || foundSquare === null) {
+      if (!foundTerritory || foundTerritory === null) {
         return res
           .status(404)
           .json({ message: 'this territory was not found', error: true });
       }
 
-      const formatedSquare = formatedDataSquare(foundSquare, withpainted);
+      const formatedTerritory = formatedDataTerritory(foundTerritory, withpainted);
 
-      return res.json({ data: formatedSquare, error: false });
+      return res.json({ data: formatedTerritory, error: false });
 
     } catch (err) {
       if (err.statusCode) {
@@ -97,9 +96,9 @@ class TerritoryController {
   async delete(req, res) {
     try {
       const { id } = req.params;
-      const deletedSquare = await Square.findOneAndDelete({ id });
+      const deletedTerritory = await Territory.findOneAndDelete({ id });
 
-      if (!deletedSquare || deletedSquare === null) {
+      if (!deletedTerritory || deletedTerritory === null) {
         return res
           .status(404)
           .json({ message: 'this territory was not found', error: true });

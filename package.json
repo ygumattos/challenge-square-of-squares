@@ -7,13 +7,15 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "dev:debug": "nodemon --inspect src/server.js"
+    "dev:debug": "nodemon --inspect src/server.js",
+    "start": "pm2 start src/server.js --watch --no-daemon --node-args=\"-r sucrase/register\""
   },
   "dependencies": {
     "dotenv": "^8.2.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "express": "^4.17.1",
     "mongoose": "^5.10.17",
+    "pm2": "^4.5.0",
     "yup": "^0.31.0"
   },
   "devDependencies": {

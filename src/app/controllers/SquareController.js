@@ -29,8 +29,12 @@ class SquareController {
         .status(201)
         .json({ data: formatedSquare, error: false });
     } catch (err) {
-      if (err.statusCode) return res.status(err.statusCode).json({ message: err.message });
-      return res.status(500).json({ err })
+      if (err.statusCode) {
+        return res
+          .status(err.statusCode)
+          .json({ message: err.message, error: true });
+      }
+      return res.status(500).json({ err, error: true })
     }
 
   }
@@ -47,13 +51,26 @@ class SquareController {
 
       return res.json(data);
     } catch (err) {
-      if (err.statusCode) return res.status(err.statusCode).json({ message: err.message });
-      return res.status(500).json({ err })
+      if (err.statusCode) {
+        return res
+          .status(err.statusCode)
+          .json({ message: err.message, error: true });
+      }
+      return res.status(500).json({ err, error: true })
     }
   }
 
   async index(req, res) {
+    try {
 
+    } catch (err) {
+      if (err.statusCode) {
+        return res
+          .status(err.statusCode)
+          .json({ message: err.message, error: true });
+      }
+      return res.status(500).json({ err, error: true })
+    }
   }
 
   async delete(req, res) {
@@ -61,10 +78,14 @@ class SquareController {
       const { id } = req.params;
       const deletedSquare = await Square.findOneAndDelete({ id });
 
-      return res.json({ deletedSquare })
+      return res.json({ error: false })
     } catch (err) {
-      if (err.statusCode) return res.status(err.statusCode).json({ message: err.message });
-      return res.status(500).json({ err })
+      if (err.statusCode) {
+        return res
+          .status(err.statusCode)
+          .json({ message: err.message, error: true });
+      }
+      return res.status(500).json({ err, error: true })
     }
   }
 }

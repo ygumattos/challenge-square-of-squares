@@ -12,8 +12,10 @@ class SquareController {
       const foundSquares = await Square.find();
       validateArea(foundSquares, area);
 
+      const idFiltered = foundSquares.map(square => square.id);
+
       const square = await Square.create({
-        id: foundSquares.length + 1,
+        id: (Math.max(...idFiltered) + 1),
         name,
         start,
         end,

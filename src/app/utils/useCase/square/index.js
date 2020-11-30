@@ -12,13 +12,13 @@ const getPosition = (start, end) => {
   }
 };
 
-const findLocation = (locationX, locationY, squares) => squares.find(square => {
+const findLocation = ({ locationX, locationY, squares }) => squares.find(square => {
   return locationX <= square.location.x && locationY <= square.location.y
 });
 
 const validateLocation = (squares, location) => {
   const { x: locationX, y: locationY } = location;
-  const intoLocation = findLocation(locationX, locationY, squares);
+  const intoLocation = findLocation({ locationX, locationY, squares });
 
   if (intoLocation) {
     throw {

@@ -28,7 +28,7 @@ const validateLocation = (squares, location) => {
   }
 }
 
-const formatedDataSquare = (square, painted_squares) => {
+const formatedDataSquare = (square, withpainted) => {
   const data = {
     id: square.id,
     name: square.name,
@@ -37,7 +37,7 @@ const formatedDataSquare = (square, painted_squares) => {
     area: square.area,
     painted_area: square.painted_area,
   }
-  if (painted_squares) data = { ...data, painted_squares: square.painted_squares }
+  if (withpainted === 'true') data.painted_squares = square.painted_squares
   return data;
 }
 

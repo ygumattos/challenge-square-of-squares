@@ -13,5 +13,6 @@ routes.delete('/territories/:id', TerritoryController.delete);
 routes.get('/territories/:id', TerritoryController.index);
 
 routes.get('/squares/:x/:y', SquareController.index);
+routes.patch('/squares/:x/:y/paint', SquareController.update);
 
 export default routes;

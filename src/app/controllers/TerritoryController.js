@@ -70,6 +70,7 @@ class TerritoryController {
   async index(req, res) {
     try {
       const { id } = req.params;
+      const { withpainted } = req.query;
 
       const foundSquare = await Square.findOne({ id });
 
@@ -79,7 +80,7 @@ class TerritoryController {
           .json({ message: 'this territory was not found', error: true });
       }
 
-      const formatedSquare = formatedDataSquare(foundSquare);
+      const formatedSquare = formatedDataSquare(foundSquare, withpainted);
 
       return res.json({ data: formatedSquare, error: false });
 
@@ -89,7 +90,7 @@ class TerritoryController {
           .status(err.statusCode)
           .json({ message: err.message, error: true });
       }
-      return res.status(500).json({ err, error: true })
+      return res.status(500).json({ message: err.message, error: true })
     }
   }
 

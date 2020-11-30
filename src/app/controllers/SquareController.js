@@ -23,16 +23,49 @@ class SquareController {
 
       await square.save();
 
-      const { data } = formatedDataSquare(square);
+      const formatedSquare = formatedDataSquare(square);
 
       return res
         .status(201)
-        .json(data);
+        .json({ data: formatedSquare, error: false });
     } catch (err) {
       if (err.statusCode) return res.status(err.statusCode).json({ message: err.message });
       return res.status(500).json({ err })
     }
 
+  }
+
+  async show(req, res) {
+    try {
+      const foundSquares = await Square.find();
+
+      const formatedSquares = foundSquares.map(square => formatedDataSquare(square));
+      const data = {
+        count: foundSquares.length,
+        ...formatedSquares
+      }
+
+      return res.json(data);
+    } catch (err) {
+      if (err.statusCode) return res.status(err.statusCode).json({ message: err.message });
+      return res.status(500).json({ err })
+    }
+  }
+
+  async index(req, res) {
+
+  }
+
+  async delete(req, res) {
+    try {
+      const { id } = req.params;
+      const deletedSquare = await Square.findOneAndDelete({ id });
+
+      return res.json({ deletedSquare })
+    } catch (err) {
+      if (err.statusCode) return res.status(err.statusCode).json({ message: err.message });
+      return res.status(500).json({ err })
+    }
   }
 }
 

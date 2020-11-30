@@ -11,17 +11,17 @@ const validateArea = (squares, area) => {
   }
 }
 
-const formatedDataSquare = (square) => {
-  return {
-    data: {
-      id: square.id,
-      name: square.name,
-      start: square.start,
-      end: square.end,
-      area: square.area,
-      painted_area: square.painted_area,
-    }
+const formatedDataSquare = (square, painted_squares) => {
+  const data = {
+    id: square.id,
+    name: square.name,
+    start: square.start,
+    end: square.end,
+    area: square.area,
+    painted_area: square.painted_area,
   }
+  if (painted_squares) data = { ...data, painted_squares: square.painted_squares }
+  return data;
 }
 
 export {
